@@ -1,0 +1,14 @@
+export namespace AutosAI {
+    export function explain_error(error) {
+        print "AI Explanation: This error likely occurred because..."
+        print "1. Check your syntax."
+        print "2. Verify variable types."
+        print "Error details: " + error
+    }
+    
+    export function generate_test(func_name) {
+        print 'test "' + func_name + '_test" {'
+        print '    assert true, "Generated test"'
+        print '}'
+    }
+}
