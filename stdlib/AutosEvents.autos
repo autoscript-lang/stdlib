@@ -1,0 +1,34 @@
+# --- AutoScript Event Emitter Library ---
+
+export namespace AutosEvents {
+
+    export class EventEmitter {
+        create() {
+            self.listeners = {} # Map<String, List<Function>>
+        }
+
+        function on(event, callback) {
+            variable list = self.listeners[event]
+            if list == none {
+                list = []
+                self.listeners[event] = list
+            }
+            list.add(callback)
+        }
+
+        function emit(event, data) {
+            variable list = self.listeners[event]
+            if list != none {
+                each callback in list {
+                    callback(data)
+                }
+            }
+        }
+
+        function off(event) {
+            self.listeners[event] = none
+        }
+    }
+}
+
+print "AutosEvents Library Loaded"

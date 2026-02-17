@@ -1,0 +1,7 @@
+# --- AutoScript DateTime Library ---
+
+export function current_time() {
+    return _native_current_time() # Calls renamed native current_time
+}
+
+print "DateTime Library Loaded"

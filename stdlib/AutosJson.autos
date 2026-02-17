@@ -1,0 +1,27 @@
+# --- AutoScript JSON Library ---
+
+export namespace AutosJson {
+
+    # Parse a JSON string into an AutoScript object (Map or List)
+    export function parse(jsonString) {
+        return parse_json(jsonString)
+    }
+
+    # Convert an AutoScript object into a JSON string
+    export function stringify(object) {
+        return to_json(object)
+    }
+
+    # Load and parse a JSON file directly
+    export function load(filePath) {
+        return load_json(filePath)
+    }
+
+    # Save an object as a JSON file
+    export function save(filePath, object) {
+        variable json = to_json(object)
+        _native_write(filePath, json)
+    }
+}
+
+print "AutosJson Library Loaded"

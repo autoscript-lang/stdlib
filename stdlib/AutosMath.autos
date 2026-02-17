@@ -1,0 +1,33 @@
+# --- AutoScript Standard Math Library ---
+
+export namespace AutosMath {
+    
+    export namespace NormalMath {
+        ## Calculates the square root of a number.
+        export function sqrt(n) {
+            return sqrt(n) # Calls native sqrt
+        }
+        
+        ## Returns the absolute value of a number.
+        export function abs(n) {
+            if (n < 0) {
+                 return -n
+            }
+            return n
+        }
+    }
+    
+    export namespace Constants {
+        ## The mathematical constant PI.
+        export constant PI = 3.14159265359
+        ## The mathematical constant E (Euler's number).
+        export constant E = 2.71828182846
+    }
+    
+    ## Calculates the sum of two numbers.
+    export function sum(a, b) {
+        return a + b
+    }
+}
+
+print "AutosMath Library Loaded"

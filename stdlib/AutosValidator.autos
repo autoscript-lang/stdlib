@@ -1,0 +1,33 @@
+# --- AutoScript Validation Library ---
+
+
+import "AutosRegex.autos"
+
+export namespace AutosValidator {
+
+    export function isEmail(str) {
+        return contains(str, "@") and contains(str, ".")
+    }
+
+    export function isNumeric(str) {
+        return AutosRegex.matches(str, "^[0-9]+(\\.[0-9]+)?$")
+    }
+
+    export function isAlpha(str) {
+        return AutosRegex.matches(str, "^[a-zA-Z]+$")
+    }
+
+    export function minLength(str, length) {
+        return len(str) >= length
+    }
+
+    export function maxLength(str, length) {
+        return len(str) <= length
+    }
+    
+    export function required(val) {
+        return val != none and val != ""
+    }
+}
+
+print "AutosValidator Library Loaded"

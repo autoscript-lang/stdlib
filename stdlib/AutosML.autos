@@ -1,0 +1,10 @@
+export namespace AutosML {
+    
+    export function tensor(data, shape) {
+        return autos.ml.tensor(data, shape)
+    }
+    
+    export function load_model(path) {
+        return autos.ml.load_model(path)
+    }
+}

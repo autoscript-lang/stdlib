@@ -1,0 +1,124 @@
+# --- AutoScript Collections Library ---
+
+export namespace AutosCollections {
+
+    # A generic Stack implementation (LIFO)
+    export class Stack {
+        create() {
+            self.items = []
+        }
+
+        function push(item) {
+            self.items.add(item)
+        }
+
+        function pop() {
+            if (self.isEmpty()) return none
+            return self.items.remove_at(len(self.items) - 1)
+        }
+
+        function peek() {
+            if (self.isEmpty()) return none
+            return self.items[len(self.items) - 1]
+        }
+
+        function isEmpty() {
+            return len(self.items) == 0
+        }
+
+        function size() {
+            return len(self.items)
+        }
+        
+        function toList() {
+            return self.items
+        }
+    }
+
+    # A generic Queue implementation (FIFO)
+    export class Queue {
+        create() {
+            self.items = []
+        }
+
+        function enqueue(item) {
+            self.items.add(item)
+        }
+
+        function dequeue() {
+            if (self.isEmpty()) return none
+            return self.items.remove_at(0)
+        }
+
+        function peek() {
+            if (self.isEmpty()) return none
+            return self.items[0]
+        }
+
+        function isEmpty() {
+            return len(self.items) == 0
+        }
+
+        function size() {
+            return len(self.items)
+        }
+    }
+
+    # A simple Set implementation (Unique items)
+    # Note: Uses an internal array for storage as we don't have a native Set primitive exposed yet via 'create'
+    export class Set {
+        create(initialList) {
+            self.items = []
+            if (initialList != none) {
+                each item in initialList {
+                    self.add(item)
+                }
+            }
+        }
+
+        function add(item) {
+            if (not self.contains(item)) {
+                self.items.add(item)
+            }
+        }
+
+        function remove(item) {
+            variable index = -1
+            variable i = 0
+            each val in self.items {
+                if (val == item) {
+                    index = i
+                }
+                i = i + 1
+            }
+            if (index != -1) {
+                self.items.remove_at(index)
+            }
+        }
+
+        function contains(item) {
+            each val in self.items {
+                if (val == item) return true
+            }
+            return false
+        }
+
+        function toList() {
+            return self.items
+        }
+        
+        function size() {
+            return len(self.items)
+        }
+        
+        function union(otherSet) {
+            variable newSet = create Set(self.items)
+            each item in otherSet.toList() {
+                newSet.add(item)
+            }
+            return newSet
+        }
+    }
+}
+
+print "AutosCollections Library Loaded"

@@ -1,0 +1,14 @@
+# --- AutoScript File System Library ---
+
+export namespace fs {
+    export async function exists(path) { return await _native_fs.exists(path) }
+    export async function read(path) { return await _native_read(path) }
+    export async function write(path, content) { return await _native_write(path, content) }
+    export async function write_append(path, content) { return await _native_write_append(path, content) }
+    export async function delete(path) { return await _native_fs.delete(path) }
+    export async function copy(src, dest) { return await _native_fs.copy(src, dest) }
+    export async function list(path) { return await _native_fs.list(path) }
+    export async function mkdir(path) { return await _native_fs.mkdir(path) }
+}
+
+print "FS Library Loaded"

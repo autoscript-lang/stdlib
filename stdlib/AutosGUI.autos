@@ -1,0 +1,22 @@
+export namespace AutosGUI {
+    
+    export class Window {
+        create(title) {
+            self.handle = autos.gui.webview(title)
+        }
+        
+        function load(html) {
+            self.handle.load_html(html)
+        }
+        
+        function bind(name, callback) {
+            # In a real impl, we'd register the callback. 
+            # For now, we just tell the native side about the binding.
+            self.handle.bind(name)
+        }
+        
+        function show() {
+            self.handle.show()
+        }
+    }
+}

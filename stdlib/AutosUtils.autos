@@ -1,0 +1,33 @@
+# --- AutoScript Utilities Library ---
+
+export namespace AutosUtils {
+
+    # Random integer between min (inclusive) and max (exclusive)
+    export function randomInt(min, max) {
+        return floor(random() * (max - min) + min)
+    }
+    
+    # Get environment variable with default
+    export function getEnv(key, defaultValue) {
+        variable val = autos.env(key)
+        if (val == "none" or val == none) {
+            return defaultValue
+        }
+        return val
+    }
+    
+    # Execute a shell command and return output
+    export function execute(cmd) {
+        return autos.exec(cmd)
+    }
+    
+    # Benchmark a function call
+    export function time(funcToRun) {
+        variable start = clock()
+        funcToRun()
+        variable end = clock()
+        return end - start
+    }
+}
+
+print "AutosUtils Library Loaded"

@@ -1,0 +1,28 @@
+# --- AutoScript Process Library ---
+
+export namespace AutosProcess {
+
+    # Execute a command and return its output (stdout)
+    export function run(command) {
+        return autos.exec(command)
+    }
+    
+    # Execute a command with arguments list
+    export function spawn(cmd, args) {
+        variable fullCmd = cmd
+        each arg in args {
+            fullCmd = fullCmd + " " + arg
+        }
+        return autos.exec(fullCmd)
+    }
+    
+    # Get current process ID (PID) - simulated or fetched if available
+    export function getPid() {
+        # Assuming we might expose this later, for now return 0 or call a shell command
+        # Windows:
+        # return trim(autos.exec("powershell -c $PID"))
+        return 0
+    }
+}
+
+print "AutosProcess Library Loaded"

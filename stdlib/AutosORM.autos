@@ -1,0 +1,73 @@
+export namespace AutosORM {
+    
+    export class Query {
+        create(db, table) {
+            self.db = db
+            self.table = table
+            self.conditions = []
+            self.limitValue = -1
+        }
+        
+        function where(col, op, val) {
+            self.conditions.push({ "col": col, "op": op, "val": val })
+            return self
+        }
+        
+        function limit(n) {
+            self.limitValue = n
+            return self
+        }
+        
+        async function get() {
+            variable sql = "SELECT * FROM " + self.table
+            if len(self.conditions) > 0 {
+                sql = sql + " WHERE "
+                variable i = 0
+                each c in self.conditions {
+                    variable val = c["val"]
+                    if typeof(val) == "string" { val = "'" + val + "'" }
+                    sql = sql + c["col"] + " " + c["op"] + " " + val
+                    if i < len(self.conditions) - 1 { sql = sql + " AND " }
+                    i = i + 1
+                }
+            }
+            if self.limitValue > 0 {
+                sql = sql + " LIMIT " + self.limitValue
+            }
+            return await self.db.query(sql)
+        }
+    }
+
+    export class Model {
+        create(tableName) {
+            self.tableName = tableName
+            # AutosORM defaults to SQLite, but can be configured
+            self.db = autos.db.connect("sqlite", "database.db")
+        }
+        
+        function query() {
+            return create Query(self.db, self.tableName)
+        }
+        
+        async function find(id) {
+            variable results = await self.query().where("id", "=", id).get()
+            return results[0]
+        }
+        
+        async function insert(data) {
+            variable keys = map_keys(data)
+            variable values = map_values(data)
+            variable colStr = join(keys, ", ")
+            
+            variable valStr = ""
+            variable i = 0
+            each val in values {
+                if typeof(val) == "string" { valStr = valStr + "'" + val + "'" }
+                else { valStr = valStr + val }
+                if i < len(values) - 1 { valStr = valStr + ", " }
+                i = i + 1
+            }
+            await self.db.execute("INSERT INTO " + self.tableName + " (" + colStr + ") VALUES (" + valStr + ")")
+        }
+    }
+}

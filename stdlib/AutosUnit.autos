@@ -1,0 +1,45 @@
+# --- AutoScript Unit Testing Library ---
+
+export namespace AutosUnit {
+
+    export function assertTrue(condition, message) {
+        if (not condition) {
+            variable msg = "Assertion Failed"
+            if (message != none) {
+                msg = msg + ": " + message
+            }
+            # This will trigger the Interpreter's failure handling if inside a 'test' block
+            assert false, msg
+        }
+    }
+
+    export function assertEqual(actual, expected, message) {
+        if (actual != expected) {
+            variable msg = "Expected " + expected + " but got " + actual
+            if (message != none) {
+                msg = msg + ". " + message
+            }
+            assert false, msg
+        }
+    }
+
+    export function assertNotEqual(actual, expected, message) {
+        if (actual == expected) {
+            variable msg = "Did not expect " + expected
+            if (message != none) {
+                msg = msg + ". " + message
+            }
+            assert false, msg
+        }
+    }
+    
+    export function fail(message) {
+        assert false, message
+    }
+    
+    export function describe(description) {
+        print("--- " + description + " ---")
+    }
+}
+
+print "AutosUnit Library Loaded"

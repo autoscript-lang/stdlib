@@ -1,0 +1,64 @@
+# --- AutoScript Path Manipulation Library ---
+
+
+
+export namespace AutosPath {
+
+    # Join path segments with the system separator (defaulting to / for compatibility)
+    export function join(parts) {
+        variable result = ""
+        variable i = 0
+        each part in parts {
+            # Strip trailing/leading slashes to clean up
+            # (Simplified join logic)
+            result = result + part
+            if i < len(parts) - 1 {
+                if not (result == "") and not (contains(result, "/")) { # Basic check
+                     # result = result + "/" 
+                     # Actually, naive concatenation is safer for now
+                }
+                result = result + "/"
+            }
+            i = i + 1
+        }
+        return replace(result, "//", "/")
+    }
+
+    # Get the file name from a path
+    export function basename(path) {
+        variable parts = split(path, "/")
+        if len(parts) > 0 {
+            return parts[len(parts) - 1]
+        }
+        return path
+    }
+
+    # Get the directory name from a path
+    export function dirname(path) {
+        variable parts = split(path, "/")
+        if len(parts) <= 1 {
+            return "."
+        }
+        variable dirParts = []
+        variable i = 0
+        each p in parts {
+            if i < len(parts) - 1 {
+                dirParts.add(p)
+            }
+            i = i + 1
+        }
+        return join(dirParts, "/")
+    }
+
+    # Get the file extension
+    export function extname(path) {
+        variable base = basename(path)
+        if contains(base, ".") {
+            variable parts = split(base, ".")
+            return "." + parts[len(parts) - 1]
+        }
+        return ""
+    }
+}
+
+print "AutosPath Library Loaded"

@@ -1,0 +1,25 @@
+# --- SQLite Database Library ---
+
+export class AutosDatabase {
+    function init(path) {
+        self.db = autos.sqlite.connect(path)
+    }
+
+    function run(sql) {
+        return self.db.execute(sql)
+    }
+
+    function find(sql) {
+        return self.db.query(sql)
+    }
+
+    function close() {
+        return self.db.close()
+    }
+}
+
+export function open_db(path) {
+    return create AutosDatabase(path)
+}
+
+print "SQLite Library Loaded"

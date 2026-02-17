@@ -1,0 +1,32 @@
+export namespace AutosWeb {
+
+    # Sends a GET request
+    export function get(url, headers) {
+        return autos.fetch(url, { "method": "GET", "headers": headers })
+    }
+
+    # Sends a POST request
+    export function post(url, body, headers) {
+        return autos.fetch(url, { "method": "POST", "body": body, "headers": headers })
+    }
+
+    # Sends a PUT request
+    export function put(url, body, headers) {
+        return autos.fetch(url, { "method": "PUT", "body": body, "headers": headers })
+    }
+
+    # Sends a DELETE request
+    export function delete(url, headers) {
+        return autos.fetch(url, { "method": "DELETE", "headers": headers })
+    }
+    
+    export function fetchJson(url) {
+        variable response = await autos.fetch(url)
+        if (response != none) {
+            return parse_json(response)
+        }
+        return none
+    }
+}
+
+print "AutosWeb Library Loaded"

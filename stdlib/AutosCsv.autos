@@ -1,0 +1,65 @@
+# --- AutoScript CSV Library ---
+
+export namespace AutosCsv {
+
+    # Parse CSV content into a list of lists
+    # Note: Handles basic CSV. Does not currently handle quoted fields containing commas.
+    export function parse(content) {
+        variable lines = split(content, "
+")
+        variable result = []
+        
+        each line in lines {
+            if trim(line) != "" {
+                variable fields = split(line, ",")
+                # Trim fields
+                variable trimmedFields = []
+                each field in fields {
+                    trimmedFields.add(trim(field))
+                }
+                result.add(trimmedFields)
+            }
+        }
+        return result
+    }
+
+    # Convert a list of lists (or list of objects) into a CSV string
+    export function stringify(data) {
+        variable result = ""
+        variable rowIndex = 0
+        
+        each row in data {
+            variable line = ""
+            
+            # Handle List of Lists
+            if typeof(row) == "array" {
+                line = join(row, ",")
+            }
+            # Handle List of Maps
+            else if typeof(row) == "map" {
+                line = join(map_values(row), ",")
+            }
+            
+            result = result + line
+            if rowIndex < len(data) - 1 {
+                result = result + "\n"
+            }
+            rowIndex = rowIndex + 1
+        }
+        return result
+    }
+
+    # Read a CSV file
+    export function read(path) {
+        variable content = read(path)
+        return parse(content)
+    }
+
+    # Write data to a CSV file
+    export function write(path, data) {
+        variable content = stringify(data)
+        write(path, content)
+    }
+}
+
+print "AutosCsv Library Loaded"

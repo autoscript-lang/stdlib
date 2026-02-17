@@ -1,0 +1,36 @@
+# --- AutoScript Threading Library ---
+
+export namespace AutosThreading {
+
+    # Sleep for milliseconds
+    export function sleep(ms) {
+        wait(ms)
+    }
+
+    # Run a function in parallel
+    export function runAsync(task) {
+        parallel {
+            task()
+        }
+    }
+
+    # Mutex implementation using native atomic operations
+    export class Lock {
+        create() {
+            self.state = { "locked": false }
+        }
+
+        function acquire() {
+            # Use native atomic CAS
+            while not autos.thread.compare_and_swap(self.state, "locked", false, true) {
+                wait(10)
+            }
+        }
+
+        function release() {
+            autos.thread.compare_and_swap(self.state, "locked", true, false)
+        }
+    }
+}
+
+print "AutosThreading Library Loaded"

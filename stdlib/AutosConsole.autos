@@ -1,0 +1,35 @@
+# --- AutoScript Console Library ---
+
+export namespace AutosConsole {
+
+    # Clear the console (OS agnostic simulation)
+    export function clear() {
+        # ANSI escape code for clearing screen
+        print "\033[H\033[2J" 
+    }
+
+    # Read a line of input
+    export function readLine(prompt) {
+        return input prompt
+    }
+
+    # Read password (masking input - requires native support, simulated here)
+    export function readPassword(prompt) {
+        # Native: return autos.read_password(prompt)
+        # Fallback:
+        return input prompt
+    }
+    
+    # Print with color (ANSI)
+    export function printColor(text, color) {
+        variable code = "\033[0m"
+        if color == "red" { code = "\033[31m" }
+        if color == "green" { code = "\033[32m" }
+        if color == "yellow" { code = "\033[33m" }
+        if color == "blue" { code = "\033[34m" }
+        
+        print code + text + "\033[0m"
+    }
+}
+
+print "AutosConsole Library Loaded"

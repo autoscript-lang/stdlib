@@ -1,0 +1,10 @@
+export namespace AutosNotebook {
+    export function display_html(html) {
+        # Magic marker for VS Code extension to render HTML
+        print "__AUTOS_DISPLAY_HTML__:" + html
+    }
+    
+    export function display_json(obj) {
+        print "__AUTOS_DISPLAY_JSON__:" + autos.to_json(obj)
+    }
+}

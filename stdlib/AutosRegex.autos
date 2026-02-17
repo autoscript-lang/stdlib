@@ -1,0 +1,10 @@
+# --- AutoScript Regex Library ---
+
+export namespace AutosRegex {
+    ## Matches a string against a regex pattern.
+    export function matches(str, pattern) {
+        return regex_match(str, pattern)
+    }
+}
+
+print "AutosRegex Library Loaded"

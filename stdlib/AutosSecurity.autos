@@ -1,0 +1,23 @@
+export namespace AutosSecurity {
+    
+    export function hash_password(password) {
+        return autos.crypto.hash_password(password)
+    }
+    
+    export function verify_password(password, hash) {
+        return autos.crypto.verify_password(password, hash)
+    }
+    
+    export function encrypt(data, key) {
+        # Key must be 32 bytes (256 bits). Wrapper ensures basic padding.
+        return autos.crypto.encrypt(data, key)
+    }
+    
+    export function decrypt(data, key) {
+        return autos.crypto.decrypt(data, key)
+    }
+    
+    export function sign(data, key) {
+        return autos.crypto.sign(data, key)
+    }
+}

@@ -1,0 +1,65 @@
+# --- AutoScript Logger Library ---
+
+import "AutosDateTime.autos"
+import "AutosFS.autos"
+
+export namespace AutosLogger {
+    
+    export enum Level {
+        INFO, WARN, ERROR, DEBUG
+    }
+    
+    variable currentLevel = Level.INFO
+    variable logFile = none
+    
+    export function setLevel(level) {
+        currentLevel = level
+    }
+    
+    export function setOutputFile(path) {
+        logFile = path
+    }
+    
+    function log(level, message) {
+        # Check priority (Simplified for this enum)
+        # Assuming ENUM ordinal values or simple comparison
+        
+        variable prefix = "[INFO]"
+        if (level == Level.WARN) {
+            prefix = "[WARN]"
+        }
+        if (level == Level.ERROR) {
+            prefix = "[ERROR]"
+        }
+        if (level == Level.DEBUG){
+             prefix = "[DEBUG]"
+        }
+        
+        variable time = current_time().format("HH:mm:ss")
+        variable fullMessage = time + " " + prefix + " " + message
+        
+        print fullMessage
+        
+        if (logFile != none) {
+            _native_write_append(logFile, fullMessage + "\n")
+        }
+    }
+    
+    export function info(message) {
+        log(Level.INFO, message)
+    }
+    
+    export function warn(message) {
+        log(Level.WARN, message)
+    }
+    
+    export function error(message) {
+        log(Level.ERROR, message)
+    }
+    
+    export function debug(message) {
+        log(Level.DEBUG, message)
+    }
+}
+
+print "AutosLogger Library Loaded"
